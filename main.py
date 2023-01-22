@@ -57,20 +57,24 @@ def main():
                 if len(playerClicks) == 2: #after the second click
                     move = engine.Move(playerClicks[0], playerClicks[1], gs.board)
                     print(move.getChessNotation())
-                    if move in validMoves:
-                        gs.makeMove(move)
-                        moveMade = True
-                        sqSelected = ()  # reset the user clicks
-                        playerClicks = []
-                        mixer.music.load('sounds/move.mp3')
-                        mixer.music.set_volume(1)
-                        mixer.music.play()
-                    else:
+                    for i in range(len(validMoves)):
+                        if move == validMoves[i]:
+                            gs.makeMove(validMoves[i])
+                            moveMade = True
+                            sqSelected = ()  # reset the user clicks
+                            playerClicks = []
+                            mixer.music.load('sounds/move.mp3')
+                            mixer.music.set_volume(1)
+                            mixer.music.play()
+                    if not moveMade:
                         playerClicks = [sqSelected]
             elif e.type == p.KEYDOWN:
                 if e.key == p.K_e:
                     gs.undoMove()
                     moveMade = True
+                    mixer.music.load('sounds/move.mp3')
+                    mixer.music.set_volume(1)
+                    mixer.music.play()
         if moveMade:
             validMoves = gs.getValidMoves()
             moveMade = False
