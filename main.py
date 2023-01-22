@@ -1,8 +1,10 @@
 # this file handles user input and renders the board
 import pygame as p
+from pygame import mixer
 import engine
 from os import path
 p.init()
+mixer.init()
 if path.exists("config/scaled"):
     WIDTH = 1024
     HEIGHT = 768
@@ -55,13 +57,14 @@ def main():
                 if len(playerClicks) == 2: #after the second click
                     move = engine.Move(playerClicks[0], playerClicks[1], gs.board)
                     print(move.getChessNotation())
-                    if gs.inCheck:
-                        print("checkmated")
                     if move in validMoves:
                         gs.makeMove(move)
                         moveMade = True
                         sqSelected = ()  # reset the user clicks
                         playerClicks = []
+                        mixer.music.load('sounds/move.mp3')
+                        mixer.music.set_volume(1)
+                        mixer.music.play()
                     else:
                         playerClicks = [sqSelected]
             elif e.type == p.KEYDOWN:

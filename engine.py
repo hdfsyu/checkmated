@@ -52,6 +52,7 @@ class GameState:
             kingR = self.blackKingLoc[0]
             kingC = self.blackKingLoc[1]
         if self.inCheck:
+            print("checkmated")
             if len(self.checks) == 1:
                 moves = self.getPossibleMoves()
                 check = self.checks[0]
@@ -289,7 +290,6 @@ class Move:
         self.pieceMoved = board[self.startR][self.startC]
         self.pieceCaptured = board[self.endR][self.endC]
         self.moveID = self.startR * 1000 + self.startC * 100 + self.endR * 10 + self.endC
-        print(self.moveID)
     #override equals method
     def __eq__(self, other):
         if isinstance(other, Move):
