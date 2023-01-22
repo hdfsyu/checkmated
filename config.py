@@ -16,7 +16,7 @@ font = pygame.font.SysFont('Arial', 40)
 objects = []
 
 
-class Button():
+class Button:
     def __init__(self, x, y, width, height, buttonText='Button', onclickFunction=None, onePress=False):
         self.x = x
         self.y = y

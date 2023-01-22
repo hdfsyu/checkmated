@@ -30,6 +30,8 @@ def main():
     screen.fill(p.Color("black"))
     clock = p.time.Clock()
     gs = engine.GameState()
+    validMoves = gs.getValidMoves()
+    moveMade = False#is a move made?
     #load images
     LoadImages()
     running = True
@@ -53,9 +55,22 @@ def main():
                 if len(playerClicks) == 2: #after the second click
                     move = engine.Move(playerClicks[0], playerClicks[1], gs.board)
                     print(move.getChessNotation())
-                    gs.makeMove(move)
-                    sqSelected = ()#reset the user clicks
-                    playerClicks = []
+                    if gs.inCheck:
+                        print("checkmated")
+                    if move in validMoves:
+                        gs.makeMove(move)
+                        moveMade = True
+                        sqSelected = ()  # reset the user clicks
+                        playerClicks = []
+                    else:
+                        playerClicks = [sqSelected]
+            elif e.type == p.KEYDOWN:
+                if e.key == p.K_e:
+                    gs.undoMove()
+                    moveMade = True
+        if moveMade:
+            validMoves = gs.getValidMoves()
+            moveMade = False
         drawState(screen,gs)
         clock.tick(MAX_FPS)
         p.display.flip()
